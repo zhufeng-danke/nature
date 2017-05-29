@@ -2,8 +2,8 @@
 
 @section('data-content')
 
+    <h3>收房合同</h3>
     <form action="{{ route('data-contract-landlord') }}" method="post">
-        <h3 style="text-align: center;">收房合同</h3>
         {!! csrf_field() !!}
         <div class="form-group">
             <label>开始日期</label>
@@ -19,7 +19,7 @@
             <label>公寓ID</label>
             <input type="number" name="suit_id" value="{{ $suit_id or '' }}" class="form-control">
         </div>
-        <button type="submit" class="btn btn-default"> 查询 & 导出 </button>
+        <button type="submit" class="btn btn-success"> 查询 & 导出 </button>
     </form>
 
     {{--<table class="table table-bordered">--}}
@@ -41,10 +41,5 @@
         {{--</tr>--}}
         {{--</tbody>--}}
     {{--</table>--}}
-
-
-
-
-
 
 @endsection
