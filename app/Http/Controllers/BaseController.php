@@ -26,7 +26,7 @@ class BaseController extends Controller
 
             });
 
-        })->download('xlsx');
+        })->download('csv');
     }
 
     /**

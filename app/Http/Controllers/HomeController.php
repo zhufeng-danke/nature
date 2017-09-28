@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Containers\Record;
+use App\Jobs\Data\Suite;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        for($i=0; $i<10; $i++){
+//            $str = 'str-'.$i;
+//            dispatch((new Suite(new Record($str)))->onQueue('suite'));
+//        }
 
         return view('home');
     }

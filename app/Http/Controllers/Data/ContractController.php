@@ -111,6 +111,7 @@ cwl.suite_id,
 cwl.number,
 cwl.start_date,
 cwl.end_date,
+cwl.status,
 cwl.stage,
 cwl.terminate_date,
 cwl.terminate_type,
@@ -122,10 +123,13 @@ cwl.terminate_date IS NULL,
 (cwl.start_date <= '" . $start . "' AND cwl.end_date >= '" . $start . "') OR (cwl.start_date >= '" . $start . "' AND cwl.start_date <= '" . $end . "'),
 (cwl.start_date <= '" . $start . "' AND cwl.terminate_date >= '" . $start . "') OR (cwl.start_date >= '" . $start . "' AND cwl.start_date <= '" . $end . "')
 )
-AND cwl.stage IN ('执行中', '执行结束')
-AND cwl.start_date IS NOT NULL
-AND cwl.end_date IS NOT NULL
-AND cwl.suite_id IS NOT NULL        
+AND 
+IF(
+cwl.terminate_date IS NULL,
+1,
+cwl.terminate_date >= cwl.start_date
+)
+AND cwl.stage IN ('执行中', '执行结束')     
         ";
 
         if ($suit_id != '' && $suit_id > 0) {
@@ -207,7 +211,8 @@ cwc.previous_id,
 cwc.number,
 cwc.stage
 FROM contract_with_customers cwc
-WHERE cwc.id = ?        
+WHERE cwc.id = ?
+AND cwc.status != '期满'
         ";
 
         $contract = DB::select($sql, [$previous_id]);
@@ -230,6 +235,7 @@ r.suite_id,
 cwc.number,
 cwc.start_date,
 cwc.end_date,
+cwc.status,
 cwc.stage,
 cwc.terminate_date,
 cwc.terminate_type,
@@ -250,9 +256,7 @@ cwc.terminate_date IS NULL,
 1,
 cwc.start_date <= cwc.terminate_date
 )
-AND cwc.stage IN ('执行中','执行结束')
-AND cwc.start_date IS NOT NULL
-AND cwc.end_date IS NOT NULL        
+AND cwc.stage IN ('执行中','执行结束')     
         ";
 
         if ($suit_id != '' && $suit_id > 0) {
