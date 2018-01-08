@@ -143,6 +143,7 @@ AND cwl.stage IN ('执行中', '执行结束')
 
     public function customer(Request $request)
     {
+        ini_set('memory_limit', '1024M');
         $requestData = $request->all();
 
         $start_date = isset($requestData['start_date']) && $requestData['start_date'] != '' ? $requestData['start_date'] : '';
